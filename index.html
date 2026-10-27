@@ -218,7 +218,6 @@
   
   <nav aria-label="Main">
     <a href="#shelf">Shelf</a>
-    <a href="#shop">Merch</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -268,10 +267,6 @@
     <div class="links" id="links"></div>
   </section>
 
-  <section id="shop">
-    <h2>Merch</h2>
-    <div class="grid" id="products"></div>
-  </section>
 </main>
 
 <footer id="contact">
@@ -297,16 +292,6 @@ const TRACKS = [
   { title: "Holes", file: "audio/holes.mp3" },
   { title: "From Above", file: "audio/from above 2.mp3" },
   { title: "We're Not Far", file: "audio/not far 2.mp3" }
-];
-
-/* "link" = a Stripe Payment Link or any checkout URL.
-   Leave it empty and the Buy button opens an email instead.
-   "image" = optional file in an "images" folder, e.g. "images/tote.jpg". */
-const PRODUCTS = [
-  { name: "Tote bag",  price: "$28", desc: "Heavy canvas, screen printed.", image: "", link: "" },
-  { name: "T-shirt",   price: "$32", desc: "Soft cotton, unisex fit.",       image: "", link: "" },
-  { name: "Vinyl",     price: "$30", desc: "12-inch pressing with insert.",  image: "", link: "" },
-  { name: "Sticker pack", price: "$8", desc: "Five vinyl stickers.",          image: "", link: "" }
 ];
 
 /* Streaming links. Empty URLs are hidden. */
@@ -346,27 +331,6 @@ $("contactLine").append("Say hello at ", el("a", { href: "mailto:" + SITE.email,
 LINKS.filter((l) => l.url).forEach((l) =>
   $("links").append(el("a", { href: l.url, target: "_blank", rel: "noopener", text: l.label }))
 );
-
-/* ---------- Shop ---------- */
-PRODUCTS.forEach((p) => {
-  const media = el("div", { class: "media" });
-  if (p.image) media.append(el("img", { src: p.image, alt: p.name, loading: "lazy" }));
-  else media.append(el("span", { text: p.name.charAt(0), "aria-hidden": "true" }));
-
-  const href = p.link || "mailto:" + SITE.email + "?subject=" + encodeURIComponent("Order: " + p.name);
-  const buy = el("a", { class: "btn", href, text: "Buy" });
-  buy.setAttribute("aria-label", "Buy " + p.name);
-  if (p.link) { buy.target = "_blank"; buy.rel = "noopener"; }
-
-  $("products").append(
-    el("div", { class: "card" }, [
-      media,
-      el("h3", { text: p.name }),
-      el("p", { text: p.desc }),
-      el("div", { class: "buy" }, [el("span", { class: "price", text: p.price }), buy])
-    ])
-  );
-});
 
 /* ---------- Player ---------- */
 const audio = new Audio();
